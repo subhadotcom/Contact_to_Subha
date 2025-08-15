@@ -463,7 +463,8 @@ class ContactForm {
 
             // Success handling
             this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
-            this.resetForm();
+            // Reset form but keep the voice recording
+            this.resetForm({ keepRecording: true });
 
         } catch (error) {
             console.error('Form submission error:', error);
@@ -544,7 +545,9 @@ class ContactForm {
         messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    resetForm() {
+    resetForm(options = {}) {
+        const { keepRecording = false } = options;
+        
         // Reset form fields
         this.form.reset();
         
@@ -559,12 +562,16 @@ class ContactForm {
         this.files = [];
         this.fileList.innerHTML = '';
 
-        // Clear audio recording
-        this.deleteRecording();
+        // Only clear audio recording if not explicitly told to keep it
+        if (!keepRecording) {
+            this.deleteRecording();
+        }
 
         // Reset recording state
-        this.isRecording = false;
-        this.updateRecordingUI();
+        if (!keepRecording) {
+            this.isRecording = false;
+            this.updateRecordingUI();
+        }
     }
 }
 
