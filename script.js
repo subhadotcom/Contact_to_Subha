@@ -475,32 +475,50 @@ class ContactForm {
     }
 
     async submitForm(formData) {
-        // Get the form's action URL
-        const formAction = this.form.getAttribute('action');
-        
         try {
+            // Get the form's action URL
+            const formAction = this.form.getAttribute('action');
+            
+            // Add additional form data that FormSubmit expects
+            formData.append('_captcha', 'false');  // Disable captcha for testing
+            formData.append('_template', 'table');  // Use table template for better formatting
+            
+            // Log form data for debugging (remove in production)
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ', pair[1]);
+            }
+            
             const response = await fetch(formAction, {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                // Don't set Content-Type header - let the browser set it with the correct boundary
             });
             
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            // Log response for debugging
+            console.log('Response status:', response.status);
+            const responseText = await response.text();
+            console.log('Response text:', responseText);
+            
+            let result;
+            try {
+                result = responseText ? JSON.parse(responseText) : {};
+            } catch (e) {
+                console.error('Error parsing JSON response:', e);
+                // If we can't parse the response but status is 200, consider it a success
+                if (response.ok) {
+                    return Promise.resolve();
+                }
+                throw new Error('Invalid response from server');
             }
             
-            const result = await response.json();
-            
-            if (result.success) {
+            if (response.ok) {
                 return Promise.resolve();
             } else {
-                throw new Error(result.message || 'Form submission failed');
+                throw new Error(result.message || `Server returned status ${response.status}`);
             }
         } catch (error) {
             console.error('Form submission error:', error);
-            throw new Error('Failed to submit form. Please try again later.');
+            throw new Error(error.message || 'Failed to submit form. Please try again later.');
         }
     }
 
