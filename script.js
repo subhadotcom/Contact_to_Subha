@@ -474,19 +474,33 @@ class ContactForm {
     }
 
     async submitForm(formData) {
-        // Simulate API call - replace with actual submission logic
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                // Simulate random success/failure for demo
-                const success = Math.random() > 0.1; // 90% success rate
-                
-                if (success) {
-                    resolve();
-                } else {
-                    reject(new Error('Server error'));
+        // Get the form's action URL
+        const formAction = this.form.getAttribute('action');
+        
+        try {
+            const response = await fetch(formAction, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
                 }
-            }, 2000); // 2 second delay to show loading
-        });
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                return Promise.resolve();
+            } else {
+                throw new Error(result.message || 'Form submission failed');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            throw new Error('Failed to submit form. Please try again later.');
+        }
     }
 
     setLoadingState(isLoading) {
