@@ -815,7 +815,8 @@ main {
 
 /* Footer Styles */
 .main-footer {
-    margin-top: 30px;
+    margin-top: 10px;
+    max-height: 200px;
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(148, 163, 184, 0.2);
@@ -828,7 +829,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0 10px 0;
+    padding: 20px 0 40px 0;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -917,6 +918,7 @@ main {
     display: flex;
     gap: 15px;
     margin-top: 20px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -965,31 +967,6 @@ main {
     opacity: 0.2;
 }
 
-
-
-.footer-bottom {
-    border-top: 1px solid rgba(148, 163, 184, 0.2);
-    padding: 10px 0;
-    background: rgba(15, 15, 35, 0.8);
-}
-
-.footer-bottom-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.copyright {
-    color: #94a3b8;
-    font-size: 1rem;
-    margin: 0;
-}
-
-
-
 /* Responsive Design */
 
 /* Large screens (1200px and up) */
@@ -1008,7 +985,7 @@ main {
     }
     
     .footer-content {
-        padding: 80px 30px 50px 30px;
+        padding: 10px 30px 5px 30px;
     }
 }
 
@@ -1048,12 +1025,6 @@ main {
     .footer-content {
         grid-template-columns: repeat(2, 1fr);
         gap: 30px;
-    }
-    
-    .footer-bottom-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
     }
 }
 
@@ -1340,23 +1311,6 @@ main {
     .newsletter-btn {
         padding: 12px;
         font-size: 0.9rem;
-    }
-    
-    .footer-bottom {
-        padding: 20px 0;
-    }
-    
-    .footer-bottom-content {
-        padding: 0 10px;
-    }
-    
-    .copyright {
-        font-size: 0.9rem;
-        text-align: center;
-    }
-    
-    .footer-bottom-links a {
-        font-size: 0.85rem;
     }
 }
 
