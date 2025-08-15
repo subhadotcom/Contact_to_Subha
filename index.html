@@ -28,7 +28,14 @@
         </header>
 
         <main>
-            <form action="https://formsubmit.co/ajax/subhadipghosh@outlook.in" method="POST" id="contactForm" class="contact-form" novalidate data-form-type="contact">
+            <form action="https://formsubmit.co/subhadipghosh@outlook.in" method="POST" enctype="multipart/form-data" id="contactForm" class="contact-form" novalidate>
+                <!-- FormSubmit Configuration -->
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="New Contact Form Submission">
+                <input type="hidden" name="_autoresponse" value="Thank you for your message! We'll get back to you soon.">
+                <input type="hidden" name="_next" value="?success=true">
+                <input type="hidden" name="_blacklist" value="spammy pattern, banned term">
                 <!-- Name Field -->
                 <div class="form-group">
                     <label for="name" class="form-label">
@@ -132,7 +139,7 @@
                             <p>Drag and drop files here or <span class="browse-text">browse</span></p>
                             <small>Maximum file size: 1GB. Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT</small>
                         </div>
-                        <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt" hidden>
+                        <input type="file" id="fileInput" name="upload" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt" style="display: none;">
                     </div>
                     <div id="fileList" class="file-list"></div>
                 </div>

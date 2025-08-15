@@ -437,34 +437,54 @@ class ContactForm {
         this.setLoadingState(true);
 
         try {
-            // Prepare form data
-            const formData = new FormData();
-            
-            // Add form fields
-            const formInputs = this.form.querySelectorAll('input, textarea');
-            formInputs.forEach(input => {
-                if (input.type !== 'file' && input.value.trim()) {
-                    formData.append(input.name, input.value.trim());
-                }
-            });
+            // Use native FormData to get all form fields
+            const formData = new FormData(this.form);
 
-            // Add files
-            this.files.forEach((file, index) => {
-                formData.append(`file_${index}`, file);
-            });
-
-            // Add audio recording
-            if (this.audioBlob) {
-                formData.append('voice_recording', this.audioBlob, 'voice_message.wav');
+            // Append files collected via custom uploader (since we clear the native input)
+            if (Array.isArray(this.files) && this.files.length > 0) {
+                this.files.forEach(file => {
+                    formData.append('upload', file, file.name);
+                });
             }
 
-            // Simulate form submission (replace with actual endpoint)
-            await this.submitForm(formData);
+            // Add audio recording if available
+            if (this.audioBlob && this.audioBlob.size > 0) {
+                console.log('Adding voice recording, size:', this.audioBlob.size, 'bytes');
+                formData.append('voice_recording', this.audioBlob, 'voice_message.wav');
+            } else {
+                console.log('No voice recording to attach');
+            }
 
-            // Success handling
-            this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
-            // Reset form but keep the voice recording
-            this.resetForm({ keepRecording: true });
+            // Log all form data for debugging (after appending files/audio)
+            console.log('FormData entries:');
+            for (let pair of formData.entries()) {
+                if (pair[1] instanceof File || pair[1] instanceof Blob) {
+                    const name = pair[1].name || 'unnamed';
+                    const size = pair[1].size;
+                    const type = pair[1].type || 'unknown';
+                    console.log(`${pair[0]}: [${pair[1].constructor.name}] ${name}, ${size} bytes, type: ${type}`);
+                } else {
+                    console.log(`${pair[0]}: ${pair[1]}`);
+                }
+            }
+
+            // Submit the form
+            const response = await fetch(this.form.action, {
+                method: 'POST',
+                body: formData,
+                // Don't set Content-Type header - let the browser set it with the correct boundary
+            });
+
+            console.log('Response status:', response.status);
+            const responseText = await response.text();
+            console.log('Response text:', responseText);
+
+            if (response.ok) {
+                this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
+                this.resetForm({ keepRecording: true });
+            } else {
+                throw new Error('Failed to send message');
+            }
 
         } catch (error) {
             console.error('Form submission error:', error);
@@ -483,9 +503,14 @@ class ContactForm {
             formData.append('_captcha', 'false');  // Disable captcha for testing
             formData.append('_template', 'table');  // Use table template for better formatting
             
-            // Log form data for debugging (remove in production)
+            // Log form data for debugging
+            console.log('FormData entries:');
             for (let pair of formData.entries()) {
-                console.log(pair[0] + ': ', pair[1]);
+                if (pair[1] instanceof File || pair[1] instanceof Blob) {
+                    console.log(`${pair[0]}: [${pair[1].constructor.name}] ${pair[1].name || 'unnamed'}, size: ${pair[1].size} bytes, type: ${pair[1].type || 'unknown'}`);
+                } else {
+                    console.log(pair[0] + ': ', pair[1]);
+                }
             }
             
             const response = await fetch(formAction, {
