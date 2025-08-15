@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <img src="profile.jpg" alt="Profile" class="profile-image">
+                    </div>
+                    <div class="brand-info">
+                        <h1 class="brand-name">ConnectForm</h1>
+                        <p class="brand-tagline">Modern Contact Solutions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-description">
+                <h2>Get In Touch</h2>
+                <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
+        </header>
+
+        <main>
+            <form id="contactForm" class="contact-form" novalidate>
+                <!-- Name Field -->
+                <div class="form-group">
+                    <label for="name" class="form-label">
+                        <i class="fas fa-user"></i>
+                        Full Name *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        class="form-input" 
+                        required 
+                        aria-describedby="name-error"
+                        autocomplete="name"
+                    >
+                    <div class="error-message" id="name-error" role="alert"></div>
+                </div>
+
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        Email Address *
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        required 
+                        aria-describedby="email-error"
+                        autocomplete="email"
+                    >
+                    <div class="error-message" id="email-error" role="alert"></div>
+                </div>
+
+                <!-- Subject Field -->
+                <div class="form-group">
+                    <label for="subject" class="form-label">
+                        <i class="fas fa-tag"></i>
+                        Subject
+                    </label>
+                    <input 
+                        type="text" 
+                        id="subject" 
+                        name="subject" 
+                        class="form-input"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- Message Field -->
+                <div class="form-group">
+                    <label for="message" class="form-label">
+                        <i class="fas fa-comment"></i>
+                        Message *
+                    </label>
+                    <textarea 
+                        id="message" 
+                        name="message" 
+                        class="form-textarea" 
+                        rows="5" 
+                        required 
+                        aria-describedby="message-error"
+                        placeholder="Tell us how we can help you..."
+                    ></textarea>
+                    <div class="error-message" id="message-error" role="alert"></div>
+                </div>
+
+                <!-- Voice Recording Section -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-microphone"></i>
+                        Voice Message (Optional)
+                    </label>
+                    <div class="voice-recorder">
+                        <button type="button" id="recordBtn" class="record-btn" aria-label="Start recording">
+                            <i class="fas fa-microphone"></i>
+                            <span>Click to Record</span>
+                        </button>
+                        <div id="recordingStatus" class="recording-status"></div>
+                        <div id="audioPlayback" class="audio-playback" style="display: none;">
+                            <audio controls></audio>
+                            <button type="button" id="deleteRecording" class="delete-btn" aria-label="Delete recording">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <small class="voice-limit-info">Maximum recording size: 200MB</small>
+                    </div>
+                </div>
+
+                <!-- File Upload Section -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-paperclip"></i>
+                        File Attachments (Optional)
+                    </label>
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag and drop files here or <span class="browse-text">browse</span></p>
+                            <small>Maximum file size: 1GB. Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT</small>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt" hidden>
+                    </div>
+                    <div id="fileList" class="file-list"></div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">Send Message</span>
+                        <div class="loading-spinner" style="display: none;"></div>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success/Error Messages -->
+            <div id="formMessages" class="form-messages"></div>
+        </main>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-section social-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:hello@connectform.com" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="copyright">
+                        &copy; 2025 ConnectForm. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
