@@ -79,15 +79,15 @@ body::before {
 }
 
 .profile-image {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 15px;
     object-fit: cover;
     border: 2px solid transparent;
     background: linear-gradient(135deg, #00f5ff 0%, #ff00ff 50%, #ffff00 100%);
     background-clip: padding-box;
     box-shadow: 0 5px 15px rgba(0, 245, 255, 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
 }
 
 .profile-image:hover {
@@ -969,7 +969,7 @@ main {
 
 .footer-bottom {
     border-top: 1px solid rgba(148, 163, 184, 0.2);
-    padding: 15px 0;
+    padding: 10px 0;
     background: rgba(15, 15, 35, 0.8);
 }
 
