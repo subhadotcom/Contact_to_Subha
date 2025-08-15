@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Messaging Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .info {
+            border-left-color: #17a2b8;
+            background: #d1ecf1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mobile Messaging Test Page</h1>
+    
+    <div class="test-section">
+        <h2>Device Information</h2>
+        <div id="deviceInfo"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Network Tests</h2>
+        <button class="test-button" onclick="testNetwork()">Test Network Connection</button>
+        <button class="test-button" onclick="testFormSubmit()">Test Form Submit</button>
+        <button class="test-button" onclick="testFetch()">Test Fetch API</button>
+        <div id="networkResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Form Validation Test</h2>
+        <form id="testForm">
+            <input type="text" id="testName" placeholder="Enter name" required>
+            <input type="email" id="testEmail" placeholder="Enter email" required>
+            <textarea id="testMessage" placeholder="Enter message" required></textarea>
+            <button type="submit" class="test-button">Test Submit</button>
+        </form>
+        <div id="formResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Console Output</h2>
+        <div id="consoleOutput" style="background: #000; color: #0f0; padding: 10px; border-radius: 4px; font-family: monospace; max-height: 300px; overflow-y: auto;"></div>
+    </div>
+
+    <script>
+        // Capture console output
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        const originalInfo = console.info;
+        
+        function addToConsole(type, ...args) {
+            const output = document.getElementById('consoleOutput');
+            const timestamp = new Date().toLocaleTimeString();
+            const message = args.map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+            ).join(' ');
+            
+            output.innerHTML += `<div>[${timestamp}] [${type.toUpperCase()}] ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        console.log = (...args) => {
+            originalLog.apply(console, args);
+            addToConsole('log', ...args);
+        };
+        
+        console.error = (...args) => {
+            originalError.apply(console, args);
+            addToConsole('error', ...args);
+        };
+        
+        console.warn = (...args) => {
+            originalWarn.apply(console, args);
+            addToConsole('warn', ...args);
+        };
+        
+        console.info = (...args) => {
+            originalInfo.apply(console, args);
+            addToConsole('info', ...args);
+        };
+
+        // Device information
+        function displayDeviceInfo() {
+            const deviceInfo = document.getElementById('deviceInfo');
+            const info = {
+                'User Agent': navigator.userAgent,
+                'Platform': navigator.platform,
+                'Language': navigator.language,
+                'Cookie Enabled': navigator.cookieEnabled,
+                'Online Status': navigator.onLine,
+                'Connection Type': navigator.connection ? navigator.connection.effectiveType : 'Unknown',
+                'Screen Resolution': `${screen.width}x${screen.height}`,
+                'Viewport Size': `${window.innerWidth}x${window.innerHeight}`,
+                'Touch Support': 'ontouchstart' in window,
+                'Max Touch Points': navigator.maxTouchPoints,
+                'Device Memory': navigator.deviceMemory ? `${navigator.deviceMemory}GB` : 'Unknown',
+                'Hardware Concurrency': navigator.hardwareConcurrency || 'Unknown'
+            };
+            
+            let html = '';
+            for (const [key, value] of Object.entries(info)) {
+                html += `<div><strong>${key}:</strong> ${value}</div>`;
+            }
+            deviceInfo.innerHTML = html;
+        }
+
+        // Network tests
+        async function testNetwork() {
+            const results = document.getElementById('networkResults');
+            results.innerHTML = '<div class="result info">Testing network connection...</div>';
+            
+            try {
+                const response = await fetch('https://httpbin.org/get');
+                if (response.ok) {
+                    results.innerHTML = '<div class="result success">Network connection successful!</div>';
+                } else {
+                    results.innerHTML = `<div class="result error">Network error: ${response.status}</div>`;
+                }
+            } catch (error) {
+                results.innerHTML = `<div class="result error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        async function testFormSubmit() {
+            const results = document.getElementById('networkResults');
+            results.innerHTML = '<div class="result info">Testing form submission...</div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('test', 'mobile-test');
+                formData.append('timestamp', Date.now().toString());
+                
+                const response = await fetch('https://httpbin.org/post', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    results.innerHTML = '<div class="result success">Form submission test successful!</div>';
+                } else {
+                    results.innerHTML = `<div class="result error">Form submission error: ${response.status}</div>`;
+                }
+            } catch (error) {
+                results.innerHTML = `<div class="result error">Form submission error: ${error.message}</div>`;
+            }
+        }
+
+        async function testFetch() {
+            const results = document.getElementById('networkResults');
+            results.innerHTML = '<div class="result info">Testing fetch API...</div>';
+            
+            try {
+                const response = await fetch('https://httpbin.org/delay/2', {
+                    signal: AbortSignal.timeout(5000)
+                });
+                
+                if (response.ok) {
+                    results.innerHTML = '<div class="result success">Fetch API test successful!</div>';
+                } else {
+                    results.innerHTML = `<div class="result error">Fetch API error: ${response.status}</div>`;
+                }
+            } catch (error) {
+                if (error.name === 'TimeoutError') {
+                    results.innerHTML = '<div class="result error">Fetch API timeout (expected)</div>';
+                } else {
+                    results.innerHTML = `<div class="result error">Fetch API error: ${error.message}</div>`;
+                }
+            }
+        }
+
+        // Form validation test
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const results = document.getElementById('formResults');
+            
+            const name = document.getElementById('testName').value.trim();
+            const email = document.getElementById('testEmail').value.trim();
+            const message = document.getElementById('testMessage').value.trim();
+            
+            let isValid = true;
+            let errors = [];
+            
+            if (!name) {
+                isValid = false;
+                errors.push('Name is required');
+            }
+            
+            if (!email) {
+                isValid = false;
+                errors.push('Email is required');
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                isValid = false;
+                errors.push('Invalid email format');
+            }
+            
+            if (!message) {
+                isValid = false;
+                errors.push('Message is required');
+            }
+            
+            if (isValid) {
+                results.innerHTML = '<div class="result success">Form validation passed!</div>';
+            } else {
+                results.innerHTML = `<div class="result error">Form validation failed: ${errors.join(', ')}</div>`;
+            }
+        });
+
+        // Initialize
+        displayDeviceInfo();
+        
+        // Monitor online/offline status
+        window.addEventListener('online', () => {
+            console.log('Device came online');
+            displayDeviceInfo();
+        });
+        
+        window.addEventListener('offline', () => {
+            console.log('Device went offline');
+            displayDeviceInfo();
+        });
+        
+        // Monitor resize
+        window.addEventListener('resize', () => {
+            displayDeviceInfo();
+        });
+        
+        console.log('Mobile test page loaded');
+        console.log('Device info displayed');
+    </script>
+</body>
+</html>

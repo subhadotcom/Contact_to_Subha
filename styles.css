@@ -1444,3 +1444,427 @@ main {
         scroll-behavior: auto !important;
     }
 }
+
+/* Mobile-specific optimizations */
+.mobile-device .contact-form {
+    /* Optimize form spacing for mobile */
+    padding: 25px 20px;
+}
+
+.mobile-device .form-input,
+.mobile-device .form-textarea {
+    /* Optimize input sizing for mobile */
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 16px 18px;
+    border-radius: 12px;
+}
+
+.mobile-device .form-textarea {
+    /* Optimize textarea for mobile */
+    min-height: 120px;
+    resize: none; /* Disable resize on mobile */
+}
+
+.mobile-device .submit-btn {
+    /* Optimize button for mobile touch */
+    padding: 20px;
+    font-size: 1.1rem;
+    min-height: 56px; /* Minimum touch target size */
+    border-radius: 16px;
+}
+
+.mobile-device .file-upload-area {
+    /* Optimize file upload for mobile */
+    padding: 30px 20px;
+    min-height: 120px;
+}
+
+.mobile-device .voice-recorder {
+    /* Optimize voice recorder for mobile */
+    padding: 25px 20px;
+}
+
+.mobile-device .record-btn {
+    /* Optimize record button for mobile */
+    padding: 18px 25px;
+    min-height: 56px;
+    border-radius: 16px;
+}
+
+/* Touch event handling */
+.touch-active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Mobile-specific focus states */
+.mobile-device .form-input:focus,
+.mobile-device .form-textarea:focus {
+    outline: none;
+    border-color: #00f5ff;
+    box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.2);
+}
+
+/* Mobile keyboard handling */
+.mobile-device .form-input:focus,
+.mobile-device .form-textarea:focus {
+    /* Ensure proper positioning when keyboard appears */
+    position: relative;
+    z-index: 10;
+}
+
+/* Mobile-specific error states */
+.mobile-device .form-input.error,
+.mobile-device .form-textarea.error {
+    border-color: #ff4757;
+    box-shadow: 0 0 0 2px rgba(255, 71, 87, 0.2);
+}
+
+.mobile-device .form-input.success,
+.mobile-device .form-textarea.success {
+    border-color: #2ed573;
+    box-shadow: 0 0 0 2px rgba(46, 213, 115, 0.2);
+}
+
+/* Mobile message display */
+.mobile-device .form-messages {
+    margin: 20px 0;
+}
+
+.mobile-device .message {
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Mobile file handling */
+.mobile-device .file-item {
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 10px;
+}
+
+.mobile-device .file-remove {
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    border-radius: 8px;
+}
+
+/* Mobile audio playback */
+.mobile-device .audio-playback {
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.mobile-device .audio-playback audio {
+    width: 100%;
+    height: 40px;
+}
+
+.mobile-device .delete-btn {
+    padding: 10px 15px;
+    min-height: 40px;
+    border-radius: 10px;
+}
+
+/* Mobile social icons */
+.mobile-device .social-icons a {
+    width: 48px;
+    height: 48px;
+    min-height: 48px;
+    border-radius: 12px;
+}
+
+/* Mobile header optimizations */
+.mobile-device .main-header {
+    margin-bottom: 25px;
+}
+
+.mobile-device .header-content {
+    padding: 15px 0;
+}
+
+.mobile-device .logo-section {
+    gap: 15px;
+}
+
+.mobile-device .brand-name {
+    font-size: 1.8rem;
+}
+
+.mobile-device .header-description h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.mobile-device .header-description p {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 10px;
+}
+
+/* Mobile footer optimizations */
+.mobile-device .footer-content {
+    padding: 30px 20px 20px 20px;
+}
+
+.mobile-device .footer-section {
+    margin-bottom: 20px;
+}
+
+.mobile-device .footer-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+/* Mobile form group spacing */
+.mobile-device .form-group {
+    margin-bottom: 25px;
+}
+
+.mobile-device .form-label {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    gap: 8px;
+}
+
+/* Mobile input placeholder optimization */
+.mobile-device .form-input::placeholder,
+.mobile-device .form-textarea::placeholder {
+    color: #a0a0a0;
+    opacity: 0.8;
+}
+
+/* Mobile-specific animations */
+@media (prefers-reduced-motion: no-preference) {
+    .mobile-device .form-input:focus,
+    .mobile-device .form-textarea:focus {
+        transition: all 0.2s ease;
+    }
+    
+    .mobile-device .submit-btn:active {
+        transform: scale(0.96);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Mobile landscape orientation handling */
+@media (max-width: 768px) and (orientation: landscape) {
+    .mobile-device .container {
+        padding: 15px;
+    }
+    
+    .mobile-device .main-header {
+        margin-bottom: 20px;
+    }
+    
+    .mobile-device .contact-form {
+        padding: 20px 15px;
+    }
+    
+    .mobile-device .form-group {
+        margin-bottom: 20px;
+    }
+}
+
+/* Mobile-specific error message positioning */
+.mobile-device .error-message {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+/* Mobile form validation visual feedback */
+.mobile-device .form-input:invalid:not(:placeholder-shown),
+.mobile-device .form-textarea:invalid:not(:placeholder-shown) {
+    border-color: #ff4757;
+}
+
+.mobile-device .form-input:valid:not(:placeholder-shown),
+.mobile-device .form-textarea:valid:not(:placeholder-shown) {
+    border-color: #2ed573;
+}
+
+/* Mobile loading state optimization */
+.mobile-device .loading-spinner {
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+}
+
+/* Mobile-specific accessibility improvements */
+.mobile-device .form-input:focus,
+.mobile-device .form-textarea:focus,
+.mobile-device .submit-btn:focus {
+    outline: 2px solid #00f5ff;
+    outline-offset: 2px;
+}
+
+/* Mobile touch target size compliance */
+.mobile-device button,
+.mobile-device .file-upload-area,
+.mobile-device .voice-recorder {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Mobile form submission feedback */
+.mobile-device .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mobile network status indicator */
+.mobile-device .network-status {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.mobile-device .network-status.online {
+    background: rgba(46, 213, 115, 0.9);
+}
+
+.mobile-device .network-status.offline {
+    background: rgba(255, 71, 87, 0.9);
+}
+
+/* Mobile-specific scroll behavior */
+.mobile-device .container {
+    scroll-behavior: smooth;
+}
+
+/* Mobile form auto-save indicator */
+.mobile-device .auto-save-indicator {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-device .auto-save-indicator.show {
+    opacity: 1;
+}
+
+/* Mobile-specific media queries for very small screens */
+@media (max-width: 360px) {
+    .mobile-device .container {
+        padding: 10px;
+    }
+    
+    .mobile-device .contact-form {
+        padding: 20px 15px;
+    }
+    
+    .mobile-device .form-input,
+    .mobile-device .form-textarea {
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+    
+    .mobile-device .submit-btn {
+        padding: 18px;
+        font-size: 1rem;
+    }
+    
+    .mobile-device .brand-name {
+        font-size: 1.6rem;
+    }
+    
+    .mobile-device .header-description h2 {
+        font-size: 1.6rem;
+    }
+}
+
+/* Mobile-specific print styles */
+@media print {
+    .mobile-device .contact-form {
+        display: none;
+    }
+    
+    .mobile-device .main-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+/* Retry button styles */
+.retry-btn {
+    background: linear-gradient(135deg, #00f5ff 0%, #0099cc 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 245, 255, 0.3);
+}
+
+.retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 245, 255, 0.4);
+}
+
+.retry-btn:active {
+    transform: translateY(0);
+}
+
+.retry-btn i {
+    font-size: 0.8rem;
+}
+
+/* Info message type */
+.message.info {
+    background: linear-gradient(135deg, #00f5ff 0%, #0099cc 100%);
+    color: white;
+    border-left: 4px solid #00f5ff;
+}
+
+.message.info i {
+    color: #00f5ff;
+}
+
+/* Mobile-specific retry button */
+.mobile-device .retry-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    min-height: 44px;
+    border-radius: 22px;
+}
+
+.mobile-device .retry-btn i {
+    font-size: 0.85rem;
+}
+
+/* Mobile message with retry button */
+.mobile-device .message.error {
+    padding-bottom: 20px;
+}
+
+.mobile-device .retry-btn {
+    margin-top: 12px;
+    width: 100%;
+    justify-content: center;
+}
